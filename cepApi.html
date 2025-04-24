@@ -1,0 +1,86 @@
+<!-- ARQUIVO HTML C/ JAVASCRIPT -->
+<!-- Matéria: REDES DE COMPUTADORES
+ Trabalho: Consumo de API - CEP
+ Aluna: JULLIA KAROLINA DE PAULA
+ Curso: Análise e Desenvolvimento de Sistemas - 4º Período -->
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Consulta de CEP</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+  <h1>Consulta de CEP</h1>
+  <!-- ESPAÇO DE ENTRADA DE DADOS / BUSCA DE CEP -->
+  <input type="text" id="cep" placeholder="Digite o CEP (somente números)">
+
+  <!-- Numero de CEP é usado pra pegar esse valor no JavaScript -->
+
+  <button onclick="buscarEndereco()">Buscar</button>
+
+  <!-- Botão que, quando clicado, chama a função buscarEndereco() no JavaScript -->
+  <div class="resultado" id="resultado"></div>
+
+  <!-- Um espaço vazio onde vamos mostrar o resultado depois da busca -->
+
+  <!-- Código JavaScript-->
+
+  <script>
+    function buscarEndereco() {
+
+      // Início da função que roda quando o botão é clicado
+
+      const cep = document.getElementById("cep").value;
+
+      // Pegamos o valor que o usuário digitou no input com "CEP"
+
+      const resultado = document.getElementById("resultado");
+
+      //Pegamos o elemento onde vamos mostrar o resultado.
+
+      // Validação simples
+      // Verifica se o CEP tem exatamente 8 números. Se não tiver, mostra erro e para a função aqui com return
+      if (!cep || cep.length !== 8) {
+        resultado.innerHTML = "<p class='erro'>CEP inválido. Digite 8 números.</p>";
+        return;
+      }
+
+      //Faz uma requisição GET para a API pública do ViaCEP, colocando o CEP no link
+
+      fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        .then(response => response.json())
+
+        //Quando a resposta chegar, converte para JSON (formato de dados).
+
+        //Depois que os dados estiverem prontos, usamos eles com a variável dados.
+        .then(dados => {
+          //Tratamento da Resposta
+          if (dados.erro) {
+            resultado.innerHTML = "<p class='erro'>CEP não encontrado!</p>";
+            // Se a API devolver um erro (CEP não existe), mostramos a mensagem de erro.
+          } else {
+            resultado.innerHTML = `
+              <p><strong>Rua:</strong> ${dados.logradouro}</p>
+              <p><strong>Bairro:</strong> ${dados.bairro}</p>
+              <p><strong>Cidade:</strong> ${dados.localidade}</p>
+              <p><strong>Estado:</strong> ${dados.uf}</p>
+            `;
+            //Se tudo der certo, mostramos os dados de endereço (rua, bairro, cidade e estado) com o conteúdo vindo da API.
+          }
+        })
+        .catch(error => {
+          resultado.innerHTML = "<p class='erro'>Erro ao consultar o CEP.</p>";
+          console.error(error);
+        });
+      //Se houver algum problema (ex: sem internet), mostramos uma mensagem genérica de erro e também mostramos o erro no console (pra quem está desenvolvendo poder ver).
+    }
+  </script>
+
+</body>
+
+</html>

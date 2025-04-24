@@ -1,0 +1,52 @@
+/*ARQUIVO CSS*/
+/* Matéria: REDES DE COMPUTADORES
+ Trabalho: Consumo de API - CEP
+ Aluna: JULLIA KAROLINA DE PAULA
+ Curso: Análise e Desenvolvimento de Sistemas - 4º Período  */
+
+body {
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+  max-width: 400px;
+  margin: auto;
+  background-color: #f0f4f8;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
+.resultado {
+  margin-top: 1rem;
+  background: #fff;
+  padding: 1rem;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.erro {
+  color: red;
+}
